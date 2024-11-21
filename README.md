@@ -33,7 +33,7 @@ Automate your YouTube video uploads like a pro! This project leverages the **You
 
 ## 🧙‍♂️ Step-by-Step Wizardry 🧙‍♀️
 
-### 1️⃣ Enable the YouTube Data API 🛠️
+### 1️⃣ Enable the YouTube Data API on Google Cloud Console 🛠️
 
 1. Visit the [Google Cloud Console](https://console.cloud.google.com/) 🌐.  
 2. Create a new project or select an existing one. 📁  
@@ -58,7 +58,7 @@ Automate your YouTube video uploads like a pro! This project leverages the **You
 ### 3️⃣ Authenticate and Generate `token.json` 🪄
 
 1. Run the script 🏃‍♂️.  
-2. A browser will open, asking you to sign in with your Google account. 🌟  
+2. A browser will open, asking you to sign in with your Google account. ( It will store you in a token, so no worries. Just login occassionally for security 😎) 🌟  
 3. Allow the requested permissions. 👍  
 4. A `token.json` file will magically appear in your project directory. 🎉
 
@@ -118,7 +118,7 @@ Don't forget to like and subscribe for more awesome videos! 💕
 ```  
 **Tags**: `"valorant, gaming, highlights, fun"` 🏆  
 **Privacy Status**: `"public"` 🌍  
-**Category ID**: `"20"` (Gaming) 🎲  
+**Category ID**: `"20"` (Gaming) 🎮 
 
 💡 **Pro Tip**: Customize the defaults in the code to save time!
 
@@ -134,10 +134,6 @@ Don't forget to like and subscribe for more awesome videos! 💕
 ## 🤝 Contributions Welcome!
 
 Got ideas for improvement or found a bug? 🐛  
-Let us know via [GitHub Issues](https://github.com/your-repo-link)!  
-
-Let’s make this tool even more awesome together! 💪  
+Hit me up, Let’s make this tool even more awesome together! 💪  
 
 ---
-
-**🎉 Happy Uploading! 🎉**  
