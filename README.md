@@ -1,4 +1,4 @@
-# 🎥 YouTube Video Uploader with Google API Integration 🚀
+# 🎥 YouTube Video Uploader with Google API 🚀
 
 Automate your YouTube video uploads like a pro! This project leverages the **YouTube Data API v3** to simplify video uploads, complete with progress tracking, error logging, and customizable metadata. Whether you're a creator or just someone who loves automation, this tool has you covered. 😎
 
