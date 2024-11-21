@@ -31,7 +31,7 @@ Automate your YouTube video uploads like a pro! This project leverages the **You
 
 ---
 
-## 🧙‍♂️ Step-by-Step Wizardry 🧙‍♀️
+## 🧙‍♂️ Setup Google Cloud Project 🧙‍♀️
 
 ### 1️⃣ Enable the YouTube Data API on Google Cloud Console 🛠️
 
@@ -57,19 +57,19 @@ Automate your YouTube video uploads like a pro! This project leverages the **You
 
 ### 3️⃣ Authenticate and Generate `token.json` 🪄
 
-1. Run the script 🏃‍♂️.  
+1. After you run the script 🏃‍♂️ ( See below 👇).  
 2. A browser will open, asking you to sign in with your Google account. ( It will store you in a token, so no worries. Just login occassionally for security 😎) 🌟  
 3. Allow the requested permissions. 👍  
 4. A `token.json` file will magically appear in your project directory. 🎉
 
 ---
 
-## 🚀 How to Use This Wizardry
+## 🚀 How to Use
 
-### 🏃‍♀️ 1. Run the Script
+### 🏃‍♀️ 1. Run the [Script](https://github.com/hariharen9/youtube-automated/blob/main/youtubeUploader.py)
 
 ```bash
-python script.py
+python youtubeUploader.py
 ```
 
 ### 📂 2. Select Your Video File
