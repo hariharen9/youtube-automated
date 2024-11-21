@@ -27,9 +27,15 @@ Join this channel to get access to perks:
 https://www.youtube.com/channel/UCGRVM6oFyzOtGJxXH32ClBw/join
 """
 DEFAULT_TAGS = [
-    "valorant", "valorant ace", "valorant montage", "valorant best moments",
-    "ace valorant", "valorant pro", "fastest ace valorant", "valorant best ace",
-]
+        "valorant", "valorant ace", "valorant montage", "valorant best moments", 
+        "ace valorant", "valorant pro", "fastest ace valorant", 
+        "valorant best ace", "best ace valorant", "valorant ace sound", 
+        "valorant fastest ace", "valorant ace complitation", 
+        "valorant immortal", "best valorant plays", "radiant valorant", 
+        "valorant aces", "valorant reflexes", "valorant reaction time", 
+        "valo", "Valorant Moments", "Valorant Stream", "Valorant highlights", 
+        "Valorant Platinums", "Valorant Ascendant", "tamil valorant", "tamil", "tamil gaming", "lo"
+    ]
 DEFAULT_GAME_TITLE = "Valorant"
 DEFAULT_CATEGORY_ID = "20"
 DEFAULT_PRIVACY_STATUS = "public"
