@@ -47,12 +47,10 @@ API_VERSION = "v3"
 LOG_FILE = "upload_errors.log"
 
 def log_error(error_message):
-    """Log error messages to a file."""
     with open(LOG_FILE, "a") as log_file:
         log_file.write(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {error_message}\n")
 
 def open_file_dialog():
-    """Open a file dialog to select a video file."""
     root = tk.Tk()
     root.withdraw()
     file_path = filedialog.askopenfilename(
@@ -61,8 +59,7 @@ def open_file_dialog():
     )
     return file_path
 
-def get_authenticated_service():
-    """Authenticate and create a YouTube API service."""
+def get_authenticated_service(): #Authenticate and create a YouTube API service.
     credentials = None
     if os.path.exists(TOKEN_FILE):
         credentials = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
@@ -79,15 +76,12 @@ def get_authenticated_service():
     return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
 def validate_category_id(category_id):
-    """Validate if the category ID is numeric."""
     return category_id.isdigit()
 
 def validate_privacy_status(privacy_status):
-    """Validate if the privacy status is one of the allowed values."""
     return privacy_status in ["private", "public", "unlisted"]
 
 def upload_video(file, title, description, tags, category_id, privacy_status, game_title=None):
-    """Upload the video to YouTube with specified details and progress tracking."""
     youtube = get_authenticated_service()
 
     if isinstance(tags, str):
@@ -105,34 +99,18 @@ def upload_video(file, title, description, tags, category_id, privacy_status, ga
         }
     }
 
-    class ProgressFileUpload(MediaFileUpload):
-        def __init__(self, filename, *args, **kwargs):
-            super().__init__(filename, *args, **kwargs)
-            self.total_size = os.path.getsize(filename)
-            self.progress_bar = tqdm(
-                total=self.total_size,
-                unit="B",
-                unit_scale=True,
-                desc="Uploading",
-                ncols=100,
-            )
-            self.bytes_uploaded = 0
+    total_size = os.path.getsize(file)
+    progress_bar = tqdm(
+        total=total_size,
+        unit="B",
+        unit_scale=True,
+        desc="Uploading",
+        ncols=100,
+    )
 
-        def next_chunk(self, *args, **kwargs):
-            chunk = super().next_chunk(*args, **kwargs)
-            if chunk[0]:
-                uploaded = int(chunk[0].progress() * self.total_size)
-                self.progress_bar.update(uploaded - self.bytes_uploaded)
-                self.bytes_uploaded = uploaded
-            return chunk
+    media = MediaFileUpload(file, chunksize=1024 * 1024 * 5, resumable=True)
 
-        def __del__(self):
-            try:
-                self.progress_bar.close()
-            except Exception as e:
-                log_error(f"Progress bar closing error: {str(e)}")
-
-    media = ProgressFileUpload(file, chunksize=1024 * 1024, resumable=True)
+    bytes_uploaded = 0
 
     for attempt in range(3):  # Retry mechanism with 3 attempts
         try:
@@ -141,8 +119,22 @@ def upload_video(file, title, description, tags, category_id, privacy_status, ga
                 body=body,
                 media_body=media,
             )
-            response = request.execute()
+
+            response = None
+            while not response:
+                try:
+                    status, response = request.next_chunk()
+                    if status:
+                        uploaded = int(status.resumable_progress)
+                        progress_bar.update(uploaded - bytes_uploaded)
+                        bytes_uploaded = uploaded
+                except HttpError as e:
+                    log_error(f"Upload error during chunking: {str(e)}")
+                    raise
+
+            progress_bar.close()
             print("\nVideo uploaded successfully! Video ID:", response.get("id"))
+
 
             if game_title:
                 video_id = response.get("id")
@@ -164,6 +156,7 @@ def upload_video(file, title, description, tags, category_id, privacy_status, ga
                 print("Game title updated successfully!")
             return
         except HttpError as e:
+            progress_bar.close()
             error_message = f"Attempt {attempt + 1}: {str(e)}"
             print(error_message)
             log_error(error_message)
@@ -171,6 +164,8 @@ def upload_video(file, title, description, tags, category_id, privacy_status, ga
                 print("Retrying upload...")
             time.sleep(2)
     print("Upload failed after 3 attempts.")
+
+
 
 def main():
     video_file = open_file_dialog()
